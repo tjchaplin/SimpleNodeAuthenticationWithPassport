@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="/js/jquery-1.8.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.activity-indicator-1.0.0.min.js"></script>
+
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <title>{title}</title>
+    <script>
+
+        $(document).ready(function(){
+           $("#signinBtn").click(function(event){
+             $("#loginOptions").modal("toggle");
+           });
+
+            $("[id=loginOptionClose]").click(function(event){
+            $("#loginOptions").modal("hide");
+            });
+
+            $("#loginOptionSave").click(function(event){
+              $("#loginOptions").modal("hide");
+            });
+
+            $("#facebookLogin").click(function(event){
+              $("#loginOptions").modal("hide");
+              $("#activityIndicator").modal("show");
+              $('#busy1').activity();
+            });
+
+            $("#projectLogin").click(function(event){
+              $("#loginOptions").modal("hide");
+              $("#siteLogin").modal("toggle");
+            });
+
+
+            $("[id=siteLoginClose]").click(function(event){
+                $("#siteLogin").modal("hide");
+            });
+
+            $("#siteLoginSave").click(function(event){
+              $("#siteLogin").modal("hide");
+            });
+
+            $("#signOutBtn").click(function(event){
+              window.location="/logout";
+            });
+            $("#facebookLogin").click(function(event){
+              window.location="/auth/facebook";
+            });
+
+            $("[id=invalidLoginClose]").click(function(event){
+              $("#invalidLogin").modal("hide");
+              $("#loginOptions").modal("show");
+            });
+         });
+
+
+
+    </script>
+
+</head>
+<body>
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#">User Main Log Page</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-right">
+                    {?isAuthenticated}
+                      <li><a href="#">{user.name}</a> </li>
+                      <li class="active"> <button id="signOutBtn" type="submit" class="btn">Sign Out</button></li>
+                    {:else}
+                      <li class="active"> <button id="signinBtn" type="submit" class="btn">Sign in</button></li>
+                    {/isAuthenticated}
+
+                 </ul>
+            </div>
+
+        </div>
+       </div>
+      </div>
+
+        <div id="busy1" style="padding-top:50px; padding-bottom:50px;"></div>
+
+        <div class="modal hide" id="loginOptions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" id="loginOptionClose" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Login</h3>
+          </div>
+          <div class="modal-body ">
+            <div class="row-fluid">
+                <div class="span4 offset4">
+                    <button id="facebookLogin" class="btn" style="width:200px">Login With Facebook</button>
+                    <p style="text-align:center; width:200px;">or</p>
+                    <button id="projectLogin" class="btn" style="width:200px">Project Login</button>
+                </div>
+             </div>
+          </div>
+           <div class="modal-footer">
+           </div>
+        </div>
+
+        <div class="modal hide" id="siteLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" id="siteLoginClose" class="close" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Login</h3>
+          </div>
+          <div class="modal-body">
+                <form action="/login" method="POST" class="form-horizontal">
+                  <div class="control-group">
+                    <label class="control-label" for="login">Email</label>
+                    <div class="controls">
+                      <input type="text" id="username" name="username" placeholder="Email">
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                      <input type="password" id="password" name="password" placeholder="Password">
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <div class="controls">
+                      <label class="checkbox">
+                        <input type="checkbox"> Remember me
+                      </label>
+                      <button type="submit" class="btn">Sign in</button>
+                    </div>
+                  </div>
+                </form>
+          </div>
+        </div>
+
+</body>
